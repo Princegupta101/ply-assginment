@@ -8,7 +8,7 @@ export default async function Dashboard() {
   let products = null;
 
   try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products/getProducts/`);
+    const response = await axios.get("/api/products/getProducts/");
     products = response.data;
   } catch (err) {
     console.error("Error fetching products:", err);
