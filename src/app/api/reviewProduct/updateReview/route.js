@@ -1,11 +1,12 @@
 import { ObjectId } from 'mongodb';
 
-import { connect } from "@/app/dbConfig/dbConfig"; // Ensure correct function name
+import { connect } from "@/app/dbConfig/dbConfig";
 import ReviewProduct from "@/app/models/ReviewProductModel";
 
 export async function PUT(request) {
     await connect();
 
+    // Parse query parameters
     const { searchParams } = new URL(request.url);
     const request_id = searchParams.get('request_id');
 
@@ -18,24 +19,24 @@ export async function PUT(request) {
     }
 
     try {
-        // Update the product's status to "rejected"
-        const product = await ReviewProduct.findByIdAndUpdate(
+        // Update the review's status to "rejected"
+        const updatedReview = await ReviewProduct.findByIdAndUpdate(
             new ObjectId(request_id),
             { $set: { status: "rejected" } },
-            { new: true } // Option to return the updated document
+            { new: true } // Return the updated document
         );
 
-        // Handle case where the product is not found
-        if (!product) {
+        // Handle case where the review is not found
+        if (!updatedReview) {
             return new Response(
-                JSON.stringify({ error: 'No product found with the given ID' }),
+                JSON.stringify({ error: 'No review found with the given ID' }),
                 { status: 404, headers: { 'Content-Type': 'application/json' } }
             );
         }
 
         // Respond with success message
         return new Response(
-            JSON.stringify({ message: "Product status updated successfully", product }),
+            JSON.stringify({ message: "Review status updated successfully", review: updatedReview }),
             { status: 200, headers: { 'Content-Type': 'application/json' } }
         );
 
