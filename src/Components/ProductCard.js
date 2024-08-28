@@ -14,21 +14,23 @@ const ProductCard = ({ product }) => {
   return (
     <div
       onClick={handleClick}
-      className="max-w-sm mx-1 bg-white border border-gray-300 rounded-lg shadow-lg overflow-hidden cursor-pointer transition-transform transform hover:scale-105"
+      className="max-w-sm mx-2 my-4 bg-white border border-gray-300 rounded-lg shadow-lg overflow-hidden cursor-pointer transition-transform transform hover:scale-105 hover:shadow-2xl"
     >
-      <Image
-        src={product.image}
-        alt={product.productName}
-        width={400} // Adjust this value as needed
-        height={200} // Adjust this value as needed
-        className="object-cover"
-      />
+      <div className="relative w-full h-56">
+        <Image
+          src={product.image}
+          alt={product.productName}
+          layout="fill"
+          objectFit="cover"
+          className="w-full h-full"
+        />
+      </div>
       <div className="p-4">
-        <h2 className="text-xl font-bold text-gray-900">{product.productName}</h2>
-        <p className="mt-2 text-gray-600">{product.productDescription}</p>
-        <div className="mt-4 flex items-center justify-between">
-          <span className="text-lg font-semibold text-gray-900">${product.price}</span>
-          <span className="text-sm font-bold text-gray-500">ID: {product.id}</span>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">{product.productName}</h2>
+        <p className="text-gray-600 mb-4">{product.productDescription}</p>
+        <div className="flex items-center justify-between">
+          <span className="text-xl font-semibold text-gray-900">${product.price}</span>
+          <span className="text-sm font-medium text-gray-500">ID: {product._id}</span>
         </div>
       </div>
     </div>
