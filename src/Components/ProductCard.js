@@ -1,6 +1,5 @@
 "use client";
 
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
@@ -17,14 +16,12 @@ const ProductCard = ({ product }) => {
       className="max-w-sm mx-2 my-4 bg-white border border-gray-300 rounded-lg shadow-lg overflow-hidden cursor-pointer transition-transform transform hover:scale-105 hover:shadow-2xl"
     >
       <div className="relative w-full h-56">
-      console.log(product.image);
-      <Image
-        src={product.image}
-        alt={product.productName}
-        fill
-        style={{ objectFit: 'cover' }}
-        className="w-full h-full"
-      />
+        <img
+          src={product.image}
+          alt={product.productName}
+          style={{ objectFit: 'cover' }}
+          className="w-full h-full object-cover"
+        />
       </div>
       <div className="p-4">
         <h2 className="text-2xl font-bold text-gray-900 mb-2">{product.productName}</h2>
