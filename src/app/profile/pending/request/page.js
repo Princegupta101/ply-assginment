@@ -52,7 +52,7 @@ export default function ProductPendingPage() {
   const handleAccept = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.put(`/api/products/updateProduct?id=${originalProduct?._id}&request_id=${id}`, product);
+      const res = await axios.put(`/api/products/updateProduct?id=${originalProduct?._id}&request_id=${id}`,  { ...product, status: 'approved' });
       if (res.status === 200) {
         enqueueSnackbar('Updated successfully', { variant: "success" });
         router.push(`/product?id=${originalProduct?._id}`);
