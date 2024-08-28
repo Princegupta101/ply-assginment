@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['via.placeholder.com'], // Add other domains if needed
+    domains: ['firebasestorage.googleapis.com','via.placeholder.com'], // Add other domains if needed
   },
   experimental: {
     missingSuspenseWithCSRBailout: false,
