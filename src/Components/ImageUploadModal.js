@@ -24,26 +24,26 @@ const ImageUploadModal = ({ onClose, imageUrl, onCropComplete }) => {
             console.error("Cropped area is not defined");
             return;
         }
-
+    
         setIsProcessing(true);
-
+    
         try {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             const image = new Image();
-
-            image.crossOrigin = "Anonymous";
+    
+            image.crossOrigin = "Anonymous"; // Handle CORS
             image.src = imageUrl;
-
+    
             await new Promise((resolve, reject) => {
                 image.onload = resolve;
                 image.onerror = reject;
             });
-
+    
             const { width, height, x, y } = croppedAreaPixels;
             canvas.width = width;
             canvas.height = height;
-
+    
             ctx.drawImage(
                 image,
                 x,
@@ -55,8 +55,16 @@ const ImageUploadModal = ({ onClose, imageUrl, onCropComplete }) => {
                 width,
                 height
             );
-
+    
             const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg'));
+            
+            if (!blob) {
+                // Fallback to Data URL if Blob is null
+                const dataUrl = canvas.toDataURL('image/jpeg');
+                onCropComplete(dataUrl);
+                return;
+            }
+    
             const reader = new FileReader();
             reader.readAsDataURL(blob);
             reader.onloadend = () => {
@@ -69,6 +77,8 @@ const ImageUploadModal = ({ onClose, imageUrl, onCropComplete }) => {
             setIsProcessing(false);
         }
     };
+    
+    
 
     return (
         <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50'>
